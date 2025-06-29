@@ -49,6 +49,7 @@ export default function InstallmentsPage() {
   const [editingInstallment, setEditingInstallment] = useState<Installment | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('all');
+  const [selectedMember, setSelectedMember] = useState('all');
   const [formData, setFormData] = useState<InstallmentForm>({
     memberId: '',
     month: '',
@@ -157,9 +158,11 @@ export default function InstallmentsPage() {
     const months = [];
     const currentDate = new Date();
     
-    // Generate months from 2 years ago to 1 year in the future
-    for (let i = -24; i <= 12; i++) {
-      const date = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, 1);
+    // Start from October 2024 and go forward
+    const startDate = new Date(2024, 9, 1); // October 2024 (month is 0-indexed)
+    
+    for (let i = 0; i <= 36; i++) { // 3 years forward from October 2024
+      const date = new Date(startDate.getFullYear(), startDate.getMonth() + i, 1);
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const monthStr = `${year}-${month}`;
@@ -171,20 +174,21 @@ export default function InstallmentsPage() {
   };
 
   const generateFilterMonthOptions = () => {
-    const months = [];
-    const currentDate = new Date();
+    const months = new Set<string>();
+    installments.forEach(inst => {
+      months.add(inst.month);
+    });
     
-    // Generate months from 2 years ago to current month
-    for (let i = -24; i <= 0; i++) {
-      const date = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, 1);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const monthStr = `${year}-${month}`;
-      const displayStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-      months.push({ value: monthStr, label: displayStr });
-    }
-    
-    return months.reverse(); // Show most recent first
+    return Array.from(months).sort().map(month => {
+      try {
+        const [year, monthNum] = month.split('-');
+        const date = new Date(parseInt(year), parseInt(monthNum) - 1, 1);
+        const displayStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+        return { value: month, label: displayStr };
+      } catch (error) {
+        return { value: month, label: month };
+      }
+    });
   };
 
   const filteredInstallments = installments.filter(installment => {
@@ -193,28 +197,39 @@ export default function InstallmentsPage() {
       installment.member.membershipId.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesMonth = selectedMonth === 'all' || installment.month === selectedMonth;
+    const matchesMember = selectedMember === 'all' || installment.member.membershipId === selectedMember;
     
-    return matchesSearch && matchesMonth;
+    return matchesSearch && matchesMonth && matchesMember;
   });
 
   const totalAmount = filteredInstallments.reduce((sum, inst) => sum + inst.amount, 0);
+  const uniqueMembers = new Set(filteredInstallments.map(i => i.member.membershipId)).size;
+  const averageAmount = filteredInstallments.length > 0 ? totalAmount / filteredInstallments.length : 0;
 
   if (isLoading) {
     return (
       <div className="p-6">
         <div className="flex items-center justify-center h-64">
-          <Icons.spinner className="h-8 w-8 animate-spin" />
+          <div className="relative">
+            <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Icons.creditCard className="h-6 w-6 text-blue-600 animate-pulse" />
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Installments Management</h1>
-          <p className="text-gray-600 mt-1">Manage monthly installment payments</p>
+    <div className="p-6 space-y-8 animate-in fade-in-50 duration-500">
+      {/* Header Section */}
+      <div className="flex items-center justify-between animate-in slide-in-from-top-4 duration-700">
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Installments Management
+          </h1>
+          <p className="text-gray-600 text-lg">Manage monthly installment payments with ease</p>
         </div>
         
         <Dialog open={isDialogOpen} onOpenChange={(open) => {
@@ -222,26 +237,26 @@ export default function InstallmentsPage() {
           if (!open) resetForm();
         }}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
               <Icons.plus className="h-4 w-4 mr-2" />
               Add Installment
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-md animate-in zoom-in-95 duration-300">
             <DialogHeader>
-              <DialogTitle>
+              <DialogTitle className="text-xl font-semibold text-gray-800">
                 {editingInstallment ? 'Edit Installment' : 'Add New Installment'}
               </DialogTitle>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="member">Member</Label>
+                <Label htmlFor="member" className="text-sm font-medium text-gray-700">Member</Label>
                 <Select
                   value={formData.memberId}
                   onValueChange={(value) => setFormData({ ...formData, memberId: value })}
                   required
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                     <SelectValue placeholder="Select member" />
                   </SelectTrigger>
                   <SelectContent>
@@ -255,16 +270,16 @@ export default function InstallmentsPage() {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="month">Month</Label>
+                <Label htmlFor="month" className="text-sm font-medium text-gray-700">Month</Label>
                 <Select
                   value={formData.month}
                   onValueChange={(value) => setFormData({ ...formData, month: value })}
                   required
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                     <SelectValue placeholder="Select month" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="max-h-60">
                     {generateMonthOptions().map((month) => (
                       <SelectItem key={month.value} value={month.value}>
                         {month.label}
@@ -275,7 +290,7 @@ export default function InstallmentsPage() {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="amount">Amount (₹)</Label>
+                <Label htmlFor="amount" className="text-sm font-medium text-gray-700">Amount (₹)</Label>
                 <Input
                   id="amount"
                   type="number"
@@ -283,19 +298,26 @@ export default function InstallmentsPage() {
                   min="0"
                   value={formData.amount}
                   onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+                  className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  placeholder="Enter amount"
                   required
                 />
               </div>
               
-              <div className="flex justify-end space-x-2 pt-4">
+              <div className="flex justify-end space-x-3 pt-4">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setIsDialogOpen(false)}
+                  className="border-gray-300 hover:bg-gray-50"
                 >
                   Cancel
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                >
                   {isSubmitting && <Icons.spinner className="h-4 w-4 mr-2 animate-spin" />}
                   {editingInstallment ? 'Update' : 'Add'} Installment
                 </Button>
@@ -305,57 +327,86 @@ export default function InstallmentsPage() {
         </Dialog>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-blue-600">
-              {filteredInstallments.length}
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 animate-in slide-in-from-bottom-4 duration-700 delay-200">
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-blue-600">Total Installments</p>
+                <p className="text-3xl font-bold text-blue-700">{filteredInstallments.length}</p>
+              </div>
+              <div className="p-3 bg-blue-200 rounded-full">
+                <Icons.creditCard className="h-6 w-6 text-blue-600" />
+              </div>
             </div>
-            <p className="text-sm text-gray-600">Total Installments</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-green-600">
-              ₹{totalAmount.toLocaleString()}
+
+        <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-green-600">Total Amount</p>
+                <p className="text-3xl font-bold text-green-700">₹{totalAmount.toLocaleString()}</p>
+              </div>
+              <div className="p-3 bg-green-200 rounded-full">
+                <Icons.dollarSign className="h-6 w-6 text-green-600" />
+              </div>
             </div>
-            <p className="text-sm text-gray-600">Total Amount</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-purple-600">
-              ₹{filteredInstallments.length > 0 ? (totalAmount / filteredInstallments.length).toFixed(0) : 0}
+
+        <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-purple-600">Average Amount</p>
+                <p className="text-3xl font-bold text-purple-700">₹{averageAmount.toFixed(0)}</p>
+              </div>
+              <div className="p-3 bg-purple-200 rounded-full">
+                <Icons.trendingUp className="h-6 w-6 text-purple-600" />
+              </div>
             </div>
-            <p className="text-sm text-gray-600">Average Amount</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-orange-600">
-              {new Set(filteredInstallments.map(i => i.member.membershipId)).size}
+
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-orange-600">Unique Members</p>
+                <p className="text-3xl font-bold text-orange-700">{uniqueMembers}</p>
+              </div>
+              <div className="p-3 bg-orange-200 rounded-full">
+                <Icons.users className="h-6 w-6 text-orange-600" />
+              </div>
             </div>
-            <p className="text-sm text-gray-600">Unique Members</p>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>All Installments</CardTitle>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <Icons.search className="h-4 w-4 text-gray-400" />
+      {/* Filters and Table */}
+      <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm animate-in slide-in-from-bottom-4 duration-700 delay-400">
+        <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+            <CardTitle className="text-2xl font-bold text-gray-800">All Installments</CardTitle>
+            
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+              {/* Search */}
+              <div className="relative">
+                <Icons.search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
                   placeholder="Search by member..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-48"
+                  className="pl-10 w-full sm:w-64 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
+
+              {/* Month Filter */}
               <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-full sm:w-48 border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                   <SelectValue placeholder="Filter by month" />
                 </SelectTrigger>
                 <SelectContent>
@@ -367,31 +418,53 @@ export default function InstallmentsPage() {
                   ))}
                 </SelectContent>
               </Select>
+
+              {/* Member Filter */}
+              <Select value={selectedMember} onValueChange={setSelectedMember}>
+                <SelectTrigger className="w-full sm:w-48 border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                  <SelectValue placeholder="Filter by member" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Members</SelectItem>
+                  {members.map((member) => (
+                    <SelectItem key={member.id} value={member.membershipId}>
+                      {member.membershipId} - {member.user.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        
+        <CardContent className="p-0">
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Member ID</TableHead>
-                  <TableHead>Member Name</TableHead>
-                  <TableHead>Month</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Payment Date</TableHead>
-                  <TableHead>Actions</TableHead>
+                <TableRow className="bg-gray-50/50">
+                  <TableHead className="font-semibold text-gray-700">Member ID</TableHead>
+                  <TableHead className="font-semibold text-gray-700">Member Name</TableHead>
+                  <TableHead className="font-semibold text-gray-700">Month</TableHead>
+                  <TableHead className="font-semibold text-gray-700">Amount</TableHead>
+                  <TableHead className="font-semibold text-gray-700">Payment Date</TableHead>
+                  <TableHead className="font-semibold text-gray-700">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredInstallments.map((installment) => (
-                  <TableRow key={installment.id}>
-                    <TableCell className="font-medium">
+                {filteredInstallments
+                  .sort((a, b) => b.month.localeCompare(a.month))
+                  .map((installment, index) => (
+                  <TableRow 
+                    key={installment.id} 
+                    className="hover:bg-blue-50/50 transition-colors duration-200 animate-in fade-in-50"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <TableCell className="font-medium text-blue-600">
                       {installment.member.membershipId}
                     </TableCell>
-                    <TableCell>{installment.member.user.name}</TableCell>
+                    <TableCell className="font-medium">{installment.member.user.name}</TableCell>
                     <TableCell>
-                      <Badge variant="outline">
+                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
                         {(() => {
                           try {
                             const [year, month] = installment.month.split('-');
@@ -403,10 +476,10 @@ export default function InstallmentsPage() {
                         })()}
                       </Badge>
                     </TableCell>
-                    <TableCell className="font-semibold text-green-600">
+                    <TableCell className="font-semibold text-green-600 text-lg">
                       ₹{installment.amount.toLocaleString()}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-gray-600">
                       {(() => {
                         try {
                           return format(new Date(installment.paymentDate), 'MMM dd, yyyy');
@@ -421,6 +494,7 @@ export default function InstallmentsPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => handleEdit(installment)}
+                          className="hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition-all duration-200"
                         >
                           <Icons.edit className="h-4 w-4" />
                         </Button>
@@ -428,6 +502,7 @@ export default function InstallmentsPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => handleDelete(installment)}
+                          className="hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition-all duration-200"
                         >
                           <Icons.trash className="h-4 w-4" />
                         </Button>
@@ -440,8 +515,12 @@ export default function InstallmentsPage() {
           </div>
           
           {filteredInstallments.length === 0 && (
-            <div className="text-center py-8">
-              <p className="text-gray-500">No installments found</p>
+            <div className="text-center py-12 animate-in fade-in-50 duration-500">
+              <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                <Icons.creditCard className="h-12 w-12 text-gray-400" />
+              </div>
+              <p className="text-gray-500 text-lg font-medium">No installments found</p>
+              <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter criteria</p>
             </div>
           )}
         </CardContent>
