@@ -290,7 +290,8 @@ export async function GET(request: NextRequest) {
     }).sort((a, b) => b.totalPaid - a.totalPaid);
 
     // Yearly comparison (only if not filtering by specific year)
-    let yearlyComparison = [];
+    let yearlyComparison: { year: string; amount: number }[] = [];
+
     if (!year || year === 'all') {
       const yearlyData = await prisma.installment.groupBy({
         by: ['month'],
