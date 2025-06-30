@@ -89,6 +89,6 @@
     "tsx": "^4.19.1"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   }
 }
