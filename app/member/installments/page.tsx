@@ -153,7 +153,7 @@ export default function MemberInstallmentsPage() {
             <CardContent className="p-3 md:p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs md:text-sm text-muted-foreground">Average Payment</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">Share Amount</p>
                   <p className="text-lg md:text-2xl font-bold text-purple-600">
                     ৳{stats.averagePayment.toLocaleString()}
                   </p>
