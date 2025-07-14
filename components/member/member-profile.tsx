@@ -235,7 +235,7 @@ export function MemberProfile() {
                       </span>
                     </div>
                     <div className="text-2xl font-bold text-purple-800 mt-2">
-                      ₹{profile.totalPaid.toLocaleString()}
+                      ৳{profile.totalPaid.toLocaleString()}
                     </div>
                     <div className="text-xs text-purple-500 mt-1">
                       Lifetime contributions
@@ -334,11 +334,10 @@ export function MemberProfile() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">
-                        Progress to ₹{targetAmount.toLocaleString()} target
+                        Progress to ৳{targetAmount.toLocaleString()} target
                       </span>
                       <span className="font-semibold text-blue-700">
-                        ₹{profile.totalPaid.toLocaleString()} / ₹
-                        {targetAmount.toLocaleString()}
+                        ৳{profile.totalPaid.toLocaleString()} / ৳{targetAmount.toLocaleString()}
                       </span>
                     </div>
                     <Progress
@@ -357,7 +356,7 @@ export function MemberProfile() {
                         Average Payment
                       </div>
                       <div className="text-xl font-bold text-green-800 mt-1">
-                        ₹
+                        ৳
                         {profile.paymentCount > 0
                           ? (profile.totalPaid / profile.paymentCount).toFixed(
                               0
@@ -375,7 +374,7 @@ export function MemberProfile() {
                         Remaining
                       </div>
                       <div className="text-xl font-bold text-blue-800 mt-1">
-                        ₹
+                        ৳
                         {Math.max(
                           0,
                           targetAmount - profile.totalPaid
