@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { StatsCards } from '@/components/admin/stats-cards';
-import { PaymentChart } from '@/components/admin/payment-chart';
-import { RecentPayments } from '@/components/admin/recent-payments';
-import { TopMembers } from '@/components/admin/top-members';
-import { QuickActions } from '@/components/admin/quick-actions';
-import { SystemOverview } from '@/components/admin/system-overview';
+import { motion } from "framer-motion";
+import { StatsCards } from "@/components/admin/stats-cards";
+import { PaymentChart } from "@/components/admin/payment-chart";
+import { RecentPayments } from "@/components/admin/recent-payments";
+import { TopMembers } from "@/components/admin/top-members";
+import { QuickActions } from "@/components/admin/quick-actions";
+import { SystemOverview } from "@/components/admin/system-overview";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -40,47 +40,51 @@ export default function AdminDashboard() {
       animate="visible"
     >
       {/* Header Section */}
-      <motion.div 
-        className="flex items-center justify-between"
+      <motion.div
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
         variants={itemVariants}
       >
-        <div className="space-y-2">
-          <motion.h1 
-            className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
+        {/* Title + Welcome Message */}
+        <div className="space-y-1.5">
+          <motion.h1
+            className="text-4xl font-extrabold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-700"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Admin Dashboard
+          </motion.h1>
+
+          {/* Subtitle - Hidden on small screens */}
+          <motion.p
+            className="text-gray-600 text-base md:text-lg hidden md:block"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Admin Dashboard
-          </motion.h1>
-          <motion.p 
-            className="text-gray-600 text-lg"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Welcome back! Here's what's happening with your membership system.
+            Stay updated with your system performance, members, and payments.
           </motion.p>
         </div>
-        
-        <motion.div 
-          className="text-right"
+
+        {/* Right Side: Date + Role - Hidden on small screens */}
+        <motion.div
+          className="flex-col text-right space-y-1 hidden md:flex"
           variants={itemVariants}
         >
           <div className="text-sm text-gray-500">
-            {new Date().toLocaleDateString('en-US', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
+            {new Date().toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
             })}
           </div>
-          <div className="text-lg font-semibold text-gray-700 mt-1">
-            Welcome back, Admin
+          <div className="text-gray-700 text-lg font-semibold">
+            Welcome back, <span className="text-indigo-600">Admin</span>
           </div>
         </motion.div>
       </motion.div>
-      
+
       {/* Stats Cards */}
       <motion.div variants={itemVariants}>
         <StatsCards />
@@ -95,16 +99,16 @@ export default function AdminDashboard() {
       <motion.div variants={itemVariants}>
         <SystemOverview />
       </motion.div>
-      
+
       {/* Charts Section */}
-      <motion.div 
+      <motion.div
         className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         variants={itemVariants}
       >
         <PaymentChart />
         <RecentPayments />
       </motion.div>
-      
+
       {/* Top Members */}
       <motion.div variants={itemVariants}>
         <TopMembers />

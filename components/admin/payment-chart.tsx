@@ -91,11 +91,11 @@ export function PaymentChart() {
             <div className="flex items-center space-x-4 text-sm">
               <div className="text-center">
                 <div className="text-gray-500">Total</div>
-                <div className="font-semibold text-blue-600">₹{totalAmount.toLocaleString()}</div>
+                <div className="font-semibold text-blue-600">৳{totalAmount.toLocaleString()}</div>
               </div>
               <div className="text-center">
                 <div className="text-gray-500">Average</div>
-                <div className="font-semibold text-green-600">₹{averageAmount.toLocaleString()}</div>
+                <div className="font-semibold text-green-600">৳{averageAmount.toLocaleString()}</div>
               </div>
               <div className="text-center">
                 <div className="text-gray-500">Trend</div>
@@ -132,10 +132,10 @@ export function PaymentChart() {
                   stroke="#6B7280"
                   fontSize={12}
                   tickLine={false}
-                  tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`}
+                  tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}K`}
                 />
                 <Tooltip 
-                  formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']}
+                  formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']}
                   labelStyle={{ color: '#374151' }}
                   contentStyle={{
                     backgroundColor: 'white',

@@ -163,7 +163,7 @@ export function SystemOverview() {
                   <div>
                     <div className="text-sm font-medium text-blue-700">This Month</div>
                     <div className="text-2xl font-bold text-blue-800">
-                      ₹{stats.thisMonthCollection.toLocaleString()}
+                      ৳{stats.thisMonthCollection.toLocaleString()}
                     </div>
                   </div>
                   <Icons.trendingUp className="h-8 w-8 text-blue-600" />
@@ -174,14 +174,14 @@ export function SystemOverview() {
                 <div className="p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
                   <div className="text-sm font-medium text-purple-700">Total Collection</div>
                   <div className="text-lg font-bold text-purple-800">
-                    ₹{(stats.totalCollection / 100000).toFixed(1)}L
+                    ৳{(stats.totalCollection / 100000).toFixed(1)}L
                   </div>
                 </div>
                 
                 <div className="p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg">
                   <div className="text-sm font-medium text-orange-700">Avg Payment</div>
                   <div className="text-lg font-bold text-orange-800">
-                    ₹{stats.averagePayment.toLocaleString()}
+                    ৳{stats.averagePayment.toLocaleString()}
                   </div>
                 </div>
               </div>
@@ -194,7 +194,7 @@ export function SystemOverview() {
           className="mt-8 pt-6 border-t border-gray-200"
           variants={itemVariants}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-3">
                 <Icons.trendingUp className="h-6 w-6 text-green-600" />
