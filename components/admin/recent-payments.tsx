@@ -161,7 +161,7 @@ export function RecentPayments() {
                     whileHover={{ scale: 1.05 }}
                     className="text-lg font-bold text-green-600"
                   >
-                    ₹{payment.amount.toLocaleString()}
+                    ৳{payment.amount.toLocaleString()}
                   </motion.div>
                   <Badge variant="secondary" className="text-xs bg-green-100 text-green-700 border-green-200">
                     {(() => {

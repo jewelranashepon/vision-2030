@@ -353,7 +353,7 @@ export default function MembersPage() {
           },
           {
             title: 'Total Collection',
-            value: `₹${stats.totalPaid.toLocaleString()}`,
+            value: `৳${stats.totalPaid.toLocaleString()}`,
             icon: Icons.dollarSign,
             gradient: 'from-purple-500 to-purple-600',
             bgGradient: 'from-purple-50 to-purple-100',
@@ -361,7 +361,7 @@ export default function MembersPage() {
           },
           {
             title: 'Average Payment',
-            value: `₹${stats.averagePayment.toFixed(0)}`,
+            value: `৳${stats.averagePayment.toFixed(0)}`,
             icon: Icons.trendingUp,
             gradient: 'from-orange-500 to-orange-600',
             bgGradient: 'from-orange-50 to-orange-100',
@@ -475,7 +475,7 @@ export default function MembersPage() {
                       </TableCell>
                       <TableCell className="font-medium">{member._count.installments}</TableCell>
                       <TableCell className="font-semibold text-green-600 text-lg">
-                        ₹{member.totalPaid.toLocaleString()}
+                        ৳{member.totalPaid.toLocaleString()}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center space-x-2" onClick={(e) => e.stopPropagation()}>

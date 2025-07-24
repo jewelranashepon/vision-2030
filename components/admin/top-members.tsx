@@ -179,7 +179,7 @@ export function TopMembers() {
                               className="text-sm font-bold text-green-600"
                               whileHover={{ scale: 1.1 }}
                             >
-                              ₹{member.totalPaid.toLocaleString()}
+                              ৳{member.totalPaid.toLocaleString()}
                             </motion.span>
                           </div>
                           

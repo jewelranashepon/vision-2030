@@ -482,7 +482,7 @@
 //         {[
 //           {
 //             title: 'Total Collection',
-//             value: `₹${reportData.summary.totalCollection.toLocaleString()}`,
+//             value: `৳${reportData.summary.totalCollection.toLocaleString()}`,
 //             icon: Icons.dollarSign,
 //             gradient: 'from-green-500 to-emerald-600',
 //             bgGradient: 'from-green-50 to-emerald-100',
@@ -500,7 +500,7 @@
 //           },
 //           {
 //             title: 'Avg Monthly',
-//             value: `₹${reportData.summary.averageMonthlyCollection.toLocaleString()}`,
+//             value: `৳${reportData.summary.averageMonthlyCollection.toLocaleString()}`,
 //             icon: Icons.trendingUp,
 //             gradient: 'from-purple-500 to-purple-600',
 //             bgGradient: 'from-purple-50 to-purple-100',
@@ -509,7 +509,7 @@
 //           },
 //           {
 //             title: 'Highest Payment',
-//             value: `₹${reportData.summary.highestPayment.toLocaleString()}`,
+//             value: `৳${reportData.summary.highestPayment.toLocaleString()}`,
 //             icon: Icons.activity,
 //             gradient: 'from-orange-500 to-orange-600',
 //             bgGradient: 'from-orange-50 to-orange-100',
@@ -631,8 +631,8 @@
 //                         </defs>
 //                         <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
 //                         <XAxis dataKey="month" stroke="#6B7280" fontSize={12} />
-//                         <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`} />
-//                         <Tooltip formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']} />
+//                         <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}K`} />
+//                         <Tooltip formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']} />
 //                         <Area type="monotone" dataKey="amount" stroke="#3B82F6" strokeWidth={3} fill="url(#colorAmount)" />
 //                       </AreaChart>
 //                     </ResponsiveContainer>
@@ -699,8 +699,8 @@
 //                     <BarChart data={reportData.monthlyCollection}>
 //                       <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
 //                       <XAxis dataKey="month" stroke="#6B7280" fontSize={12} />
-//                       <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`} />
-//                       <Tooltip formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']} />
+//                       <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}K`} />
+//                       <Tooltip formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']} />
 //                       <Bar dataKey="amount" fill="#10B981" radius={[4, 4, 0, 0]} />
 //                     </BarChart>
 //                   </ResponsiveContainer>
@@ -731,11 +731,11 @@
 //                             </Badge>
 //                           </TableCell>
 //                           <TableCell className="font-semibold text-green-600 text-lg">
-//                             ₹{month.amount.toLocaleString()}
+//                             ৳{month.amount.toLocaleString()}
 //                           </TableCell>
 //                           <TableCell className="font-medium">{month.count}</TableCell>
 //                           <TableCell className="font-medium text-purple-600">
-//                             ₹{month.count > 0 ? (month.amount / month.count).toFixed(0) : 0}
+//                             ৳{month.count > 0 ? (month.amount / month.count).toFixed(0) : 0}
 //                           </TableCell>
 //                         </motion.tr>
 //                       ))}
@@ -769,8 +769,8 @@
 //                     <BarChart data={reportData.yearlyComparison}>
 //                       <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
 //                       <XAxis dataKey="year" stroke="#6B7280" fontSize={12} />
-//                       <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`} />
-//                       <Tooltip formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']} />
+//                       <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `৳${(value / 100000).toFixed(1)}L`} />
+//                       <Tooltip formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']} />
 //                       <Bar dataKey="amount" fill="#F59E0B" radius={[4, 4, 0, 0]} />
 //                     </BarChart>
 //                   </ResponsiveContainer>
@@ -834,11 +834,11 @@
 //                           </TableCell>
 //                           <TableCell className="font-medium">{member.memberName}</TableCell>
 //                           <TableCell className="font-semibold text-green-600 text-lg">
-//                             ₹{member.totalPaid.toLocaleString()}
+//                             ৳{member.totalPaid.toLocaleString()}
 //                           </TableCell>
 //                           <TableCell className="font-medium">{member.paymentCount}</TableCell>
 //                           <TableCell className="font-medium text-blue-600">
-//                             ₹{member.averagePayment.toLocaleString()}
+//                             ৳{member.averagePayment.toLocaleString()}
 //                           </TableCell>
 //                           <TableCell>
 //                             {member.lastPayment ? (
@@ -882,8 +882,8 @@
 //                       <LineChart data={reportData.monthlyCollection}>
 //                         <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
 //                         <XAxis dataKey="month" stroke="#6B7280" fontSize={12} />
-//                         <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`} />
-//                         <Tooltip formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']} />
+//                         <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}K`} />
+//                         <Tooltip formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']} />
 //                         <Line type="monotone" dataKey="amount" stroke="#6366F1" strokeWidth={3} dot={{ fill: '#6366F1', strokeWidth: 2, r: 4 }} />
 //                       </LineChart>
 //                     </ResponsiveContainer>
@@ -1537,7 +1537,7 @@ export default function ReportsPage() {
           },
           {
             title: 'Avg Monthly',
-            value: `₹${reportData.summary.averageMonthlyCollection.toLocaleString()}`,
+            value: `৳${reportData.summary.averageMonthlyCollection.toLocaleString()}`,
             icon: Icons.trendingUp,
             gradient: 'from-purple-500 to-purple-600',
             bgGradient: 'from-purple-50 to-purple-100',
@@ -1546,7 +1546,7 @@ export default function ReportsPage() {
           },
           {
             title: 'Highest Payment',
-            value: `₹${reportData.summary.highestPayment.toLocaleString()}`,
+            value: `৳${reportData.summary.highestPayment.toLocaleString()}`,
             icon: Icons.activity,
             gradient: 'from-orange-500 to-orange-600',
             bgGradient: 'from-orange-50 to-orange-100',
@@ -1691,8 +1691,8 @@ export default function ReportsPage() {
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                         <XAxis dataKey="month" stroke="#6B7280" fontSize={12} />
-                        <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`} />
-                        <Tooltip formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']} />
+                        <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}K`} />
+                        <Tooltip formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']} />
                         <Area type="monotone" dataKey="amount" stroke="#3B82F6" strokeWidth={3} fill="url(#colorAmount)" />
                       </AreaChart>
                     </ResponsiveContainer>
@@ -1759,8 +1759,8 @@ export default function ReportsPage() {
                     <BarChart data={reportData.monthlyCollection}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                       <XAxis dataKey="month" stroke="#6B7280" fontSize={12} />
-                      <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`} />
-                      <Tooltip formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']} />
+                      <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}K`} />
+                      <Tooltip formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']} />
                       <Bar dataKey="amount" fill="#10B981" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
@@ -1791,11 +1791,11 @@ export default function ReportsPage() {
                             </Badge>
                           </TableCell>
                           <TableCell className="font-semibold text-green-600 text-lg">
-                            ₹{month.amount.toLocaleString()}
+                            ৳{month.amount.toLocaleString()}
                           </TableCell>
                           <TableCell className="font-medium">{month.count}</TableCell>
                           <TableCell className="font-medium text-purple-600">
-                            ₹{month.count > 0 ? (month.amount / month.count).toFixed(0) : 0}
+                            ৳{month.count > 0 ? (month.amount / month.count).toFixed(0) : 0}
                           </TableCell>
                         </motion.tr>
                       ))}
@@ -1829,8 +1829,8 @@ export default function ReportsPage() {
                     <BarChart data={reportData.yearlyComparison}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                       <XAxis dataKey="year" stroke="#6B7280" fontSize={12} />
-                      <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`} />
-                      <Tooltip formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']} />
+                      <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `৳${(value / 100000).toFixed(1)}L`} />
+                      <Tooltip formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']} />
                       <Bar dataKey="amount" fill="#F59E0B" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
@@ -1894,11 +1894,11 @@ export default function ReportsPage() {
                           </TableCell>
                           <TableCell className="font-medium">{member.memberName}</TableCell>
                           <TableCell className="font-semibold text-green-600 text-lg">
-                            ₹{member.totalPaid.toLocaleString()}
+                            ৳{member.totalPaid.toLocaleString()}
                           </TableCell>
                           <TableCell className="font-medium">{member.paymentCount}</TableCell>
                           <TableCell className="font-medium text-blue-600">
-                            ₹{member.averagePayment.toLocaleString()}
+                            ৳{member.averagePayment.toLocaleString()}
                           </TableCell>
                           <TableCell>
                             {member.lastPayment ? (
@@ -1942,8 +1942,8 @@ export default function ReportsPage() {
                       <LineChart data={reportData.monthlyCollection}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                         <XAxis dataKey="month" stroke="#6B7280" fontSize={12} />
-                        <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`} />
-                        <Tooltip formatter={(value) => [`₹${Number(value).toLocaleString()}`, 'Amount']} />
+                        <YAxis stroke="#6B7280" fontSize={12} tickFormatter={(value) => `৳${(value / 1000).toFixed(0)}K`} />
+                        <Tooltip formatter={(value) => [`৳${Number(value).toLocaleString()}`, 'Amount']} />
                         <Line type="monotone" dataKey="amount" stroke="#6366F1" strokeWidth={3} dot={{ fill: '#6366F1', strokeWidth: 2, r: 4 }} />
                       </LineChart>
                     </ResponsiveContainer>

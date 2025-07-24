@@ -290,7 +290,7 @@ export default function InstallmentsPage() {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="amount" className="text-sm font-medium text-gray-700">Amount (₹)</Label>
+                <Label htmlFor="amount" className="text-sm font-medium text-gray-700">Amount (৳)</Label>
                 <Input
                   id="amount"
                   type="number"
@@ -348,7 +348,7 @@ export default function InstallmentsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-green-600">Total Amount</p>
-                <p className="text-3xl font-bold text-green-700">₹{totalAmount.toLocaleString()}</p>
+                <p className="text-3xl font-bold text-green-700">৳{totalAmount.toLocaleString()}</p>
               </div>
               <div className="p-3 bg-green-200 rounded-full">
                 <Icons.dollarSign className="h-6 w-6 text-green-600" />
@@ -362,7 +362,7 @@ export default function InstallmentsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-purple-600">Average Amount</p>
-                <p className="text-3xl font-bold text-purple-700">₹{averageAmount.toFixed(0)}</p>
+                <p className="text-3xl font-bold text-purple-700">৳{averageAmount.toFixed(0)}</p>
               </div>
               <div className="p-3 bg-purple-200 rounded-full">
                 <Icons.trendingUp className="h-6 w-6 text-purple-600" />
@@ -477,7 +477,7 @@ export default function InstallmentsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="font-semibold text-green-600 text-lg">
-                      ₹{installment.amount.toLocaleString()}
+                      ৳{installment.amount.toLocaleString()}
                     </TableCell>
                     <TableCell className="text-gray-600">
                       {(() => {
