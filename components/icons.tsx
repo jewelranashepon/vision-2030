@@ -24,7 +24,15 @@ import {
   FileText,
   PieChart,
   Activity,
-  ChevronLeft
+  ChevronLeft,
+  Shield,
+  Building2,
+  Briefcase,
+  LogIn ,
+  Moon,
+  Laptop,
+  SunMedium,
+  KeyRound,
 } from 'lucide-react';
 
 export const Icons = {
@@ -54,4 +62,13 @@ export const Icons = {
   pieChart: PieChart,
   activity: Activity,
   chevronLeft: ChevronLeft,
+  logo: Shield, // or Building2 or Briefcase
+  shield: Shield,
+  building: Building2,
+  briefcase: Briefcase,
+  login: LogIn,
+  moon: Moon,
+  laptop: Laptop,
+  sun: SunMedium,
+  key: KeyRound,
 };

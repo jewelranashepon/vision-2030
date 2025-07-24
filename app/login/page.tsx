@@ -1,15 +1,21 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Icons } from '@/components/icons';
-import { toast } from 'sonner';
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Icons } from "@/components/icons";
+import { toast } from "sonner";
 
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.95 },
@@ -37,23 +43,23 @@ const itemVariants = {
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -61,16 +67,16 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.message || "Login failed");
       }
 
-      toast.success('Login successful!');
-      
+      toast.success("Login successful!");
+
       // Redirect based on role
-      if (data.user.role === 'ADMIN') {
-        router.push('/admin/dashboard');
+      if (data.user.role === "ADMIN") {
+        router.push("/admin/dashboard");
       } else {
-        router.push('/member/dashboard');
+        router.push("/member/dashboard");
       }
     } catch (error: any) {
       setError(error.message);
@@ -81,31 +87,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-20"
+          className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/50 to-purple-50/50"
           animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
+            opacity: [0.3, 0.4, 0.3],
           }}
           transition={{
-            duration: 20,
+            duration: 10,
             repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-        <motion.div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-green-400 to-blue-500 rounded-full opacity-20"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
+            ease: "easeInOut",
           }}
         />
       </div>
@@ -114,30 +107,38 @@ export default function LoginPage() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10"
+        className="relative z-10 w-full max-w-md"
       >
-        <Card className="w-full max-w-md shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="space-y-4 text-center">
+        <Card className="shadow-xl border-0 bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-center">
             <motion.div
-              className="flex items-center justify-center mb-4"
-              whileHover={{ scale: 1.1, rotate: 360 }}
-              transition={{ duration: 0.6 }}
+              className="flex items-center justify-center mb-2"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full">
-                <Icons.users className="h-8 w-8 text-white" />
+              <div className="bg-white p-3 rounded-full shadow-lg">
+                <Icons.logo className="h-10 w-10 text-blue-600" />
               </div>
             </motion.div>
-            
+            <CardTitle className="text-2xl font-bold text-white">
+              Vision - 2030
+            </CardTitle>
+            <CardDescription className="text-blue-100 mt-1">
+              Empowering every member, every step of the way.
+            </CardDescription>
+          </div>
+
+          <CardHeader className="space-y-1">
             <motion.div variants={itemVariants}>
-              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Welcome Back
+              <CardTitle className="text-xl font-semibold text-gray-800">
+                Sign in to your account
               </CardTitle>
-              <CardDescription className="text-gray-600 mt-2">
-                Enter your credentials to access the membership system
+              <CardDescription className="text-gray-500">
+                Enter your email and password below
               </CardDescription>
             </motion.div>
           </CardHeader>
-          
+
           <CardContent>
             {error && (
               <motion.div
@@ -145,86 +146,94 @@ export default function LoginPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mb-4"
               >
-                <Alert variant="destructive" className="border-red-200 bg-red-50">
-                  <AlertDescription className="text-red-700">{error}</AlertDescription>
+                <Alert
+                  variant="destructive"
+                  className="border-red-200 bg-red-50"
+                >
+                  <AlertDescription className="text-red-700">
+                    {error}
+                  </AlertDescription>
                 </Alert>
               </motion.div>
             )}
-            
+
             <motion.form
               onSubmit={handleSubmit}
-              className="space-y-6"
+              className="space-y-4"
               variants={itemVariants}
             >
-              <motion.div 
-                className="space-y-2"
-                whileFocus={{ scale: 1.02 }}
-              >
-                <Label htmlFor="email" className="text-gray-700 font-medium">Email</Label>
+              <motion.div className="space-y-2" whileFocus={{ scale: 1.01 }}>
+                <Label htmlFor="email" className="text-gray-700">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@example.com"
+                  placeholder="your@email.com"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   required
                 />
               </motion.div>
-              
-              <motion.div 
-                className="space-y-2"
-                whileFocus={{ scale: 1.02 }}
-              >
-                <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
+
+              <motion.div className="space-y-2" whileFocus={{ scale: 1.01 }}>
+                <Label htmlFor="password" className="text-gray-700">
+                  Password
+                </Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="••••••••"
                   value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   required
                 />
               </motion.div>
-              
+
+              <div className="flex items-center justify-between">
+                <motion.a
+                  href="/forgot-password"
+                  className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                  whileHover={{ x: 2 }}
+                >
+                  Forgot password?
+                </motion.a>
+              </div>
+
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
               >
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300" 
+                <Button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md"
                   disabled={isLoading}
                 >
                   {isLoading ? (
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="mr-2"
                     >
                       <Icons.spinner className="h-4 w-4" />
                     </motion.div>
                   ) : (
-                    <Icons.users className="mr-2 h-4 w-4" />
+                    <Icons.login className="mr-2 h-4 w-4" />
                   )}
-                  {isLoading ? 'Signing In...' : 'Sign In'}
+                  {isLoading ? "Signing In..." : "Sign In"}
                 </Button>
               </motion.div>
             </motion.form>
-            
-            <motion.div 
-              className="mt-8 text-center text-sm text-gray-600 space-y-3"
-              variants={itemVariants}
-            >
-              <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
-                <p className="font-semibold text-gray-700 mb-2">Demo Credentials:</p>
-                <div className="space-y-1">
-                  <p><span className="font-medium">Admin:</span> admin@example.com / admin123</p>
-                  <p><span className="font-medium">Member:</span> jakir@example.com / member123</p>
-                </div>
-              </div>
-            </motion.div>
           </CardContent>
         </Card>
       </motion.div>
