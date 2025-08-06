@@ -343,7 +343,7 @@ function generateMonthlyInstallmentsCSV(data: any): string {
     'Member ID',
     'Member Name',
     'Month',
-    'Amount (₹)',
+    'Amount (৳)',
     'Payment Date',
   ];
 
@@ -364,9 +364,9 @@ function generateMonthlyInstallmentsCSV(data: any): string {
 function generateYearlySummaryCSV(data: any): string {
   const headers = [
     'Year',
-    'Total Amount (₹)',
+    'Total Amount (৳)',
     'Payment Count',
-    'Average Amount (₹)',
+    'Average Amount (৳)',
   ];
 
   const rows = data.yearlyData.map((year: any) => [
@@ -386,9 +386,9 @@ function generateMemberWiseCSV(data: any): string {
   const headers = [
     'Member ID',
     'Member Name',
-    'Total Paid (₹)',
+    'Total Paid (৳)',
     'Payment Count',
-    'Average Payment (₹)',
+    'Average Payment (৳)',
     'Last Payment Month',
   ];
 
@@ -410,9 +410,9 @@ function generateMemberWiseCSV(data: any): string {
 function generatePaymentTrendsCSV(data: any): string {
   const headers = [
     'Month',
-    'Total Amount (₹)',
+    'Total Amount (৳)',
     'Payment Count',
-    'Average Amount (₹)',
+    'Average Amount (৳)',
   ];
 
   const rows = data.trends.map((trend: any) => [
@@ -431,13 +431,13 @@ function generatePaymentTrendsCSV(data: any): string {
 function generateExecutiveSummaryCSV(data: any): string {
   const summaryHeaders = ['Metric', 'Value'];
   const summaryRows = [
-    ['Total Collection', `₹${data.summary.totalCollection.toLocaleString()}`],
+    ['Total Collection', `৳${data.summary.totalCollection.toLocaleString()}`],
     ['Total Installments', data.summary.totalInstallments.toString()],
-    ['Average Payment', `₹${data.summary.averagePayment.toFixed(2)}`],
+    ['Average Payment', `৳${data.summary.averagePayment.toFixed(2)}`],
     ['Total Members', data.summary.totalMembers.toString()],
   ];
 
-  const memberHeaders = ['Rank', 'Member ID', 'Member Name', 'Total Paid (₹)', 'Payment Count'];
+  const memberHeaders = ['Rank', 'Member ID', 'Member Name', 'Total Paid (৳)', 'Payment Count'];
   const memberRows = data.topMembers.map((member: any, index: number) => [
     (index + 1).toString(),
     member.membershipId,
@@ -466,7 +466,7 @@ function generateDetailedTransactionsCSV(data: any): string {
     'Member Name',
     'Member Email',
     'Month',
-    'Amount (₹)',
+    'Amount (৳)',
     'Payment Date',
     'Created Date',
   ];

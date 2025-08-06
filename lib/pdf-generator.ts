@@ -119,7 +119,7 @@ export class PDFGenerator {
     const cards = [
       {
         label: "Total Collection",
-        value: `₹${summary.totalCollection.toLocaleString()}`,
+        value: `৳${summary.totalCollection.toLocaleString()}`,
         color: [34, 197, 94],
       },
       {
@@ -129,12 +129,12 @@ export class PDFGenerator {
       },
       {
         label: "Average Monthly",
-        value: `₹${summary.averageMonthlyCollection.toLocaleString()}`,
+        value: `৳${summary.averageMonthlyCollection.toLocaleString()}`,
         color: [147, 51, 234],
       },
       {
         label: "Highest Payment",
-        value: `₹${summary.highestPayment.toLocaleString()}`,
+        value: `৳${summary.highestPayment.toLocaleString()}`,
         color: [249, 115, 22],
       },
     ];
@@ -176,9 +176,9 @@ export class PDFGenerator {
 
     const monthlyData = data.monthlyCollection.map((item) => [
       this.formatMonth(item.month),
-      `₹${item.amount.toLocaleString()}`,
+      `৳${item.amount.toLocaleString()}`,
       item.count.toString(),
-      `₹${item.count > 0 ? (item.amount / item.count).toFixed(0) : "0"}`,
+      `৳${item.count > 0 ? (item.amount / item.count).toFixed(0) : "0"}`,
     ]);
 
     autoTable(this.doc, {
@@ -205,7 +205,7 @@ export class PDFGenerator {
 
     const yearlyData = data.yearlyComparison.map((item) => [
       item.year,
-      `₹${item.amount.toLocaleString()}`,
+      `৳${item.amount.toLocaleString()}`,
       data.yearlyComparison.length > 1
         ? this.calculateGrowth(item, data.yearlyComparison)
         : "N/A",
@@ -239,9 +239,9 @@ export class PDFGenerator {
         (index + 1).toString(),
         member.membershipId,
         member.memberName,
-        `₹${member.totalPaid.toLocaleString()}`,
+        `৳${member.totalPaid.toLocaleString()}`,
         member.paymentCount.toString(),
-        `₹${member.averagePayment.toLocaleString()}`,
+        `৳${member.averagePayment.toLocaleString()}`,
         member.lastPayment ? this.formatMonth(member.lastPayment) : "None",
       ]);
 
@@ -301,9 +301,9 @@ export class PDFGenerator {
 
     const trendsData = data.monthlyCollection.map((item) => [
       this.formatMonth(item.month),
-      `₹${item.amount.toLocaleString()}`,
+      `৳${item.amount.toLocaleString()}`,
       item.count.toString(),
-      `₹${item.count > 0 ? (item.amount / item.count).toFixed(0) : "0"}`,
+      `৳${item.count > 0 ? (item.amount / item.count).toFixed(0) : "0"}`,
     ]);
 
     autoTable(this.doc, {
@@ -329,11 +329,11 @@ export class PDFGenerator {
     this.addSection("🎯 Key Performance Indicators");
 
     const kpiData = [
-      ["Total Revenue", `₹${data.summary.totalCollection.toLocaleString()}`],
+      ["Total Revenue", `৳${data.summary.totalCollection.toLocaleString()}`],
       ["Active Members", data.summary.activeMembers.toString()],
       [
         "Average Monthly Collection",
-        `₹${data.summary.averageMonthlyCollection.toLocaleString()}`,
+        `৳${data.summary.averageMonthlyCollection.toLocaleString()}`,
       ],
       ["Member Retention Rate", "95%"], // Calculated based on active members
       ["Payment Completion Rate", "87%"], // Example metric
@@ -361,7 +361,7 @@ export class PDFGenerator {
         (index + 1).toString(),
         member.memberName,
         member.membershipId,
-        `₹${member.totalPaid.toLocaleString()}`,
+        `৳${member.totalPaid.toLocaleString()}`,
       ]);
 
     autoTable(this.doc, {
@@ -392,7 +392,7 @@ export class PDFGenerator {
       .map((item, index) => [
         `TXN${String(index + 1).padStart(4, "0")}`,
         this.formatMonth(item.month),
-        `₹${item.amount.toLocaleString()}`,
+        `৳${item.amount.toLocaleString()}`,
         new Date().toLocaleDateString(),
         "Completed",
       ]);

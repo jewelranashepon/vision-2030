@@ -39,7 +39,7 @@ export function MemberStats() {
   const cards = [
     {
       title: 'Total Paid',
-      value: `₹${stats.totalPaid.toLocaleString()}`,
+      value: `৳${stats.totalPaid.toLocaleString()}`,
       icon: Icons.dollarSign,
       color: 'text-green-600',
       bgColor: 'bg-green-50',
@@ -53,7 +53,7 @@ export function MemberStats() {
     },
     {
       title: 'Average Payment',
-      value: `₹${stats.averagePayment.toLocaleString()}`,
+      value: `৳${stats.averagePayment.toLocaleString()}`,
       icon: Icons.trendingUp,
       color: 'text-purple-600',
       bgColor: 'bg-purple-50',
