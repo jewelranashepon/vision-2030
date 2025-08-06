@@ -1,10 +1,10 @@
-import { 
-  Users, 
-  Loader2, 
-  Home, 
-  UserPlus, 
-  CreditCard, 
-  BarChart3, 
+import {
+  Users,
+  Loader2,
+  Home,
+  UserPlus,
+  CreditCard,
+  BarChart3,
   Settings,
   LogOut,
   Menu,
@@ -28,12 +28,13 @@ import {
   Shield,
   Building2,
   Briefcase,
-  LogIn ,
+  LogIn,
   Moon,
   Laptop,
   SunMedium,
   KeyRound,
-} from 'lucide-react';
+  Mail,
+} from "lucide-react";
 
 export const Icons = {
   users: Users,
@@ -71,4 +72,5 @@ export const Icons = {
   laptop: Laptop,
   sun: SunMedium,
   key: KeyRound,
+  mail: Mail,
 };

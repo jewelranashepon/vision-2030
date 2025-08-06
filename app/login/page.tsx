@@ -196,16 +196,6 @@ export default function LoginPage() {
                 />
               </motion.div>
 
-              <div className="flex items-center justify-between">
-                <motion.a
-                  href="/forgot-password"
-                  className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
-                  whileHover={{ x: 2 }}
-                >
-                  Forgot password?
-                </motion.a>
-              </div>
-
               <motion.div
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
@@ -233,6 +223,16 @@ export default function LoginPage() {
                   {isLoading ? "Signing In..." : "Sign In"}
                 </Button>
               </motion.div>
+
+              <div className="flex justify-center">
+                <motion.a
+                  href="/forgot-password"
+                  className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                  whileHover={{ x: 2 }}
+                >
+                  Forgot password?
+                </motion.a>
+              </div>
             </motion.form>
           </CardContent>
         </Card>
